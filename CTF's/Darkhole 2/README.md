@@ -20,6 +20,8 @@ git log
 ```
     Shows the commit history of the repository  
 
+
+
 ```
 `git show 'last_commit'`
 ```
@@ -123,7 +125,7 @@ sudo -l
 <img width="1335" height="332" alt="Captura de pantalla 2026-02-20 223813" src="https://github.com/user-attachments/assets/79b66f00-e7d2-4fe7-ac3d-a55eb2dbd568" />
 
 <img width="2520" height="382" alt="Captura de pantalla 2026-02-20 224453" src="https://github.com/user-attachments/assets/2f37d0cf-cbe9-456c-a98d-f087f2d7c86f" />
-We see that the user can execute **python3**, which is a clear privilege escalation vector.
+We see that the user can execute python3, which is a clear privilege escalation vector.
 
 <img width="1907" height="752" alt="Captura de pantalla 2026-02-20 225539" src="https://github.com/user-attachments/assets/7cfcf549-a1bd-42f0-adff-b048f0a1b0fb" />
 
