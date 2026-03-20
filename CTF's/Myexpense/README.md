@@ -42,17 +42,20 @@ request.send();
 
 - After that, we discover a **message panel**, which becomes another attack surface.  Using the same HTTP server technique, we inject a payload to **steal session cookies from any user who views the message**.
 
-![[Captura de pantalla 2025-09-11 040126.png]]
+<img width="2465" height="549" alt="Captura de pantalla 2025-09-11 040126" src="https://github.com/user-attachments/assets/6d71a954-b993-4fef-bd57-d69bc06bfc2c" />
+
     We start collecting multiple session cookies and then **test them one by one** until we identify the one belonging to the **manager**.
 
-![[Captura de pantalla 2025-09-11 040240.png]]
+<img width="2605" height="1042" alt="Captura de pantalla 2025-09-11 040240" src="https://github.com/user-attachments/assets/b5be615b-cd01-45ac-a62d-789029cb0155" />
+
      And we obtaine access as our manager
 
 - Once we get access at that level, we approve our request. However, to escalate further (finance role), we cannot rely on cookies anymore, so we look for another vector.
 
      At this point, we discover the application is vulnerable to **MySQL injection**.
 
-![[Captura de pantalla 2025-09-11 171728.png]]
+<img width="2537" height="1077" alt="Captura de pantalla 2025-09-11 171728" src="https://github.com/user-attachments/assets/ec7e665f-4737-4572-91ae-85d202e4acbd" />
+
 
 - We enumerate the databases:
 
@@ -144,7 +147,8 @@ active
 - With this, we log in as **pbaudouin** (finance role) and approve the transaction.
 
 
-![[Captura de pantalla 2025-09-11 195959.png]]
+<img width="2630" height="280" alt="Captura de pantalla 2025-09-11 195959" src="https://github.com/user-attachments/assets/5603283c-1a24-4945-8792-3920bd4a46b9" />
+
 
 - Finally, logging in as **slamotte** gives us the flag.
 
