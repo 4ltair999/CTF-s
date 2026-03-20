@@ -4,6 +4,7 @@
 
 <img width="1662" height="853" alt="Captura de pantalla 2026-02-14 184255" src="https://github.com/user-attachments/assets/d44e6981-7c38-4468-8d38-c3d0d9ec9ad1" />
 
+
 -  As we can see, the default port **80** returned nothing, but port **8080** revealed a page requesting an **invitation code**.
 
    **Fuzzing Strategy:** We could use fuzzing here, but since this CTF has very limited RAM, we must be surgical with our wordlists.
@@ -12,16 +13,20 @@
 
 <img width="2522" height="787" alt="Captura de pantalla 2026-02-14 192510" src="https://github.com/user-attachments/assets/5db950d0-70cb-412d-9bd1-b19cf3c582cf" />
 
+
 ```
 wfuzz -c -w /opt/SecLists/Fuzzing/special-chars.txt -d 'password=FUZZ' http://192.168.1.100:8080/login
 ```
 
 <img width="1657" height="1285" alt="Captura de pantalla 2026-02-14 192734" src="https://github.com/user-attachments/assets/311c5ca1-1591-4e3a-8b4c-efc15a325ce6" />
 
+
 - We noticed an interesting response when using a **double quote (** `"` **)**. Let's see what happens when we use it as the invitation code.
+
 
 <img width="2047" height="1237" alt="Captura de pantalla 2026-02-14 193055" src="https://github.com/user-attachments/assets/fe670f77-738f-48ba-ba9e-32cb001b3183" />
 The error reveals the backend is using **SQLite**. It also exposes the query structure, showing a table named `code` and a column named `password`.
+
 
 - I developed a script to automate a character-by-character injection to extract the password.
 
@@ -54,11 +59,14 @@ for i in tqdm(range(1,100)):
             break
 ```
 
+
 **Password obtained:** `myinvitecode123`
 
 <img width="2227" height="1125" alt="Captura de pantalla 2026-02-15 034047" src="https://github.com/user-attachments/assets/da3fcd45-599d-4737-8b99-03ffaef51974" />
 
+
 - Entering the code grants access to a scanner that appears to interact with **bash**. Let's test for command injection.
+
 
 <img width="1425" height="770" alt="Captura de pantalla 2026-02-15 034131" src="https://github.com/user-attachments/assets/bd2fbd4c-6980-489f-acad-8450b694fd49" />
 It responds. Now, let's aim for a **reverse shell**.
