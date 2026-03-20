@@ -49,8 +49,8 @@ XML
 </methodCall>
 ```
 
-![[Captura de pantalla 2026-02-10 172354.png]]
-
+<img width="3247" height="860" alt="Captura de pantalla 2026-02-10 172354" src="https://github.com/user-attachments/assets/6c9c73aa-4db1-4330-9414-78a30f7fbba6" />
+ 
 - Once the method was confirmed, I prepared a template to test credentials:
 
 XML
@@ -73,7 +73,9 @@ curl -s -X POST "http://IP/wordpress/xmlrpc.php" -d@structure.xml
 
 - To automate the process for the `admin` user, I developed a Bash script. I identified three specific error responses (invalid credentials, insufficient arguments, or malformed XML) to filter out failures and detect the correct password.
 
-![[Captura de pantalla 2026-02-11 200024.png]] ![[Captura de pantalla 2026-02-12 001519.png]]
+<img width="2610" height="1387" alt="Captura de pantalla 2026-02-11 200024" src="https://github.com/user-attachments/assets/4b0ff787-dc00-477c-baac-f6a3a9509513" />
+ 
+<img width="2147" height="657" alt="Captura de pantalla 2026-02-12 001519" src="https://github.com/user-attachments/assets/de96076c-cac2-47fc-956b-448c00243e2f" />
 
 - The script
 
