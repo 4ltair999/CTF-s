@@ -66,7 +66,7 @@ netstat -nat
  This shows **active TCP connections** on the system.
 
 <img width="3350" height="1199" alt="Captura de pantalla 2026-02-20 201103" src="https://github.com/user-attachments/assets/5ddf24cd-b319-4dd4-ae65-884bea5c96e4" />
-We notice a suspicious port: **9999**. Now we analyze the processes using:
+We notice a suspicious port: 9999. Now we analyze the processes using:
 
 ```
 ps -faux
@@ -136,6 +136,7 @@ sudo -u
  Allows executing commands as another user (in this case, **root**).
 
 <img width="915" height="280" alt="Captura de pantalla 2026-02-20 225612" src="https://github.com/user-attachments/assets/5e0e8bf3-4387-4328-97cf-d892977e37be" />
+
 And there we get the **flag**!
 
 ---
